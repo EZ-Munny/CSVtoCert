@@ -7,8 +7,7 @@ The following project was created to assist others in creating printable certifi
 **\-** see online instructions for Python installation, be safe use a Windows sandbox and or Python virtual environment.
 
 **HTML to PDF convertor:**  
-HTML to PDF conversion is optional but requires a binary executable to be in the same directory: WKHTMLtoPDF found here: [https://wkhtmltopdf.org/downloads.html](https://wkhtmltopdf.org/downloads.html) Installer also found in project.
-
+HTML to PDF conversion is optional but requires a playwrite headless chrome to be installed. If not already installed, script will install on first run.
 **Pseudo Code.**
 
 | Take excel spreadsheet information and produce a series of pdfs certificates.\- Read in excel data through exported csv file.\- Read in each column and each row.\- Read in HTML template with variables.\- Replace variables with csv file data.\- Save the HTML file as new.\- Convert HTML to PDF.\- Repeat until done. |
