@@ -7,7 +7,7 @@ The following project was created to assist others in creating printable certifi
 **\-** see online instructions for Python installation, be safe use a Windows sandbox and or Python virtual environment.
 
 **HTML to PDF convertor:**  
-HTML to PDF conversion is optional but requires a binary executable to be in the same directory: WKHTMLtoPDF found here: [https://wkhtmltopdf.org/downloads.html](https://wkhtmltopdf.org/downloads.html)
+HTML to PDF conversion is optional but requires a binary executable to be in the same directory: WKHTMLtoPDF found here: [https://wkhtmltopdf.org/downloads.html](https://wkhtmltopdf.org/downloads.html) Installer also found in project.
 
 **Pseudo Code.**
 
