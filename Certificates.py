@@ -2,7 +2,14 @@ import csv
 import re
 import os
 import shutil
+import asyncio
 import subprocess
+from pathlib import Path
+from playwright.async_api import async_playwright
+
+# Install Playwright browsers if not already installed
+print('Installing Playwrite if needed:')
+subprocess.run(["playwright", "install", "chromium"], check=True)
 
 #########################
 # Remove special characters replace with file safe annotation, ex. -dash-
@@ -60,8 +67,21 @@ elif "certs" not in dirList:
     os.mkdir("certs")
 
 #########################
-# Read set, read certificate (template), open template, replace name placeholder, replace topic placeholder. create new html file in certs folder.
+# Read set, read certificate (template), open template, replace name placeholder, replace topic placeholder. create new html file in certs folder. Create PDF from HTML
 #########################
+async def html_to_pdf(input_html_path, output_pdf_path):
+    file_url = f"file:///certs/{input_html_path}"
+    
+    async with async_playwright() as p:
+        browser = await p.chromium.launch()
+        page = await browser.new_page()
+        await page.goto(file_url, wait_until="networkidle")
+        await page.pdf(
+            path=str(output_pdf_path),
+            format="A4",
+            print_background=True
+        )
+        await browser.close()
 
 for names, topic in topicAndpresenters:
     certificate = "dev/Certificate_01.html"
@@ -74,20 +94,6 @@ for names, topic in topicAndpresenters:
         f.write(finalCertificate)
         print(f'created: {clean_file_title(topic)}.html')
         f.close()
-#########################
-# Process HTML to pdfs. Comment section out if PDFs are not needed.
-#########################
+        #Comment out below line if PDF not needed
+        asyncio.run(html_to_pdf(clean_file_title(topic)+'.html',clean_file_title(topic)+'.pdf'))
 
-local = os.path.abspath('.')
-print(local)
-folderList = os.listdir('certs')
-for file in folderList:
-    print(file)
-    path = os.path.join('certs', file)  
-    print(path, end='\n\n')
-    pdfFile = path.replace('.html', '.pdf')
-    subprocess.run(['wkhtmltopdf', 
-                    '--enable-local-file-access',
-                    '--page-size', 'Letter',
-                    '--print-media-type',
-                    path, pdfFile])
